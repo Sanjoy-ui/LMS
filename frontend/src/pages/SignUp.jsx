@@ -11,6 +11,8 @@ import {toast } from "react-toastify"
 import {ClipLoader} from "react-spinners"
 import { useDispatch } from 'react-redux';
 import { setUserData } from '../redux/userSlice';
+import { signInWithPopup } from 'firebase/auth';
+import {auth ,  provider } from '../../utils/firebase';
 
 
 
@@ -44,6 +46,31 @@ function SignUp() {
             toast.error("Sign Up Failed")
         }
     }   
+
+    const googleSignUp = async () => {
+        setLoading(true)
+        try {
+            const response = await signInWithPopup(auth , provider)
+            const user = response.user
+            
+            // Send user data to backend
+            const result = await axios.post(serverUrl + "/api/auth/google-signup", {
+                name: user.displayName,
+                email: user.email,
+                photoUrl: user.photoURL,
+                role: role
+            }, { withCredentials: true })
+            
+            dispatch(setUserData(result.data))
+            setLoading(false)
+            navigate("/")
+            toast.success("Signed Up with Google Successfully!")
+        } catch (error) {
+            console.log(error)
+            setLoading(false)
+            toast.error(error?.response?.data?.message || "Google Sign Up Failed")
+        }
+    }
 
   return (
     <div className='bg-[#dddbdb] w-[100vw] h-[100vh] flex items-center justify-center gap-3'>
@@ -96,10 +123,15 @@ function SignUp() {
                         <div className='w-[50%] text-[15px] text-[#6f6f6f] flex items-center justify-center'>Or Continue</div>
                         <div className='w-[25%] h-[0.5px] bg-[#c4c4c4] '></div>
                 </div>
-                <div className='w-[80%] h-[40px] border-1 border-[black] rounded-[5px] flex items-center justify-center'>
-                    <img src={google} className='w-[25px]' alt="google" />
-                    <span className='text-[18px] text-gray-500'>oogle</span>
-                </div>
+                <button 
+                    type="button"
+                    className='w-[80%] h-[40px] border border-[black] rounded-[5px] flex items-center justify-center cursor-pointer hover:bg-gray-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed' 
+                    onClick={googleSignUp}
+                    disabled={loading}
+                >
+                    <img src={google} className='w-[25px] pointer-events-none' alt="google" />
+                    <span className='text-[18px] text-gray-500 pointer-events-none'>oogle</span>
+                </button>
                 <div className='text-[#6f6f6f] '>
                         Already have an account ? <span className='cursor-pointer underline underline-offset-1 text-[black] ' onClick={()=>{
                             navigate("/login")

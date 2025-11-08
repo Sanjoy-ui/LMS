@@ -68,7 +68,7 @@ function Login() {
                   
                   <button className='w-[80%] h-[40px] bg-black text-white cursor-pointer flex items-center justify-center rounded-[5px]' disabled={loading} onClick={handlLogin} >{ loading ? <ClipLoader size={30} color = "white" />: "Login"}</button>
                   <span className='underline underline-offset-1 text-[13px] text-[#585757] cursor-pointer' onClick={()=>{
-
+                    navigate("/forget")
                   }}>Forget your Password ?</span>
                   <div className='w-[80%] flex items-center gap-2'>
                           <div className='w-[25%] h-[0.5px] bg-[#c4c4c4]  '></div>
