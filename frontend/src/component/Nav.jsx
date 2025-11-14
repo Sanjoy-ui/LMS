@@ -37,8 +37,9 @@ function Nav() {
                 </div>
                 <div className='w-[30%] lg:flex items-center justify-center gap-4 hidden'>
                         {!userData && <IoPersonCircleOutline onClick={()=> setShow(prev => !prev)} className='w-[50px] h-[50px] fill-white cursor-pointer'/>}
-                        {userData && <div onClick={()=> setShow(prev => !prev)}  className='w-[50px] h-[50px] rounded-full text-white flex items-center justify-center text-[28px] border-2 bg-black border-white cursor-pointer' >
-                            {userData?.name.slice(0,1).toUpperCase()}
+                        {userData?.photoUrl ? <img onClick={()=> setShow(prev => !prev)} className='w-[50px] h-[50px] rounded-full text-white flex items-center justify-center text-[28px] border-2 bg-black border-white cursor-pointer' src={userData.photoUrl} alt='User Photo' /> : <div onClick={()=> setShow(prev => !prev)}  className='w-[50px] h-[50px] rounded-full text-white flex items-center justify-center text-[28px] border-2 bg-black border-white cursor-pointer' >
+                            { userData?.name.slice(0,1).toUpperCase()
+                            }
 
                         </div>}
                         {userData?.role=== "Educator" && <div className='px-[20px] py-[10px] border-2 lg:border-white border-white lg:text-white rounded-[10px] text-[18px] font-light  cursor-pointer '>Deshboard</div> }
@@ -57,7 +58,7 @@ function Nav() {
                 <div className={`fixed top-0 w-[100vw] h-[100vh] bg-[#000000d6] flex items-center justify-center flex-col gap-5 z-10 lg:hidden left-0 transition-all duration-500 ease-in-out ${showHam ? "translate-x-0 opacity-100" : "translate-x-full opacity-0 pointer-events-none"}`}>
                             <ImCross onClick={()=>{ setShowHam(prev => !prev)}} className='w-[30px] h-[30px] text-white absolute top-5 right-[4%] cursor-pointer hover:scale-110 transition-transform'/>
                                 {!userData && <IoPersonCircleOutline  className='w-[50px] h-[50px] fill-white cursor-pointer'/>}
-                        {userData && <div   className='w-[50px] h-[50px] rounded-full text-white flex items-center justify-center text-[28px] border-2 bg-black border-white cursor-pointer' >
+                        {userData?.photoUrl ? <img src={userData.photoUrl} className='w-[50px] h-[50px] rounded-full text-white flex items-center justify-center text-[28px] border-2 bg-black border-white cursor-pointer' alt="User Photo" /> : <div   className='w-[50px] h-[50px] rounded-full text-white flex items-center justify-center text-[28px] border-2 bg-black border-white cursor-pointer' >
                             {userData?.name.slice(0,1).toUpperCase()}
 
                         </div>}

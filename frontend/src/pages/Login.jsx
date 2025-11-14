@@ -11,6 +11,8 @@ import { serverUrl } from '../App';
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { setUserData } from '../redux/userSlice';
+import { signInWithPopup } from 'firebase/auth';
+import { auth, provider } from '../../utils/firebase';
 
 function Login() {
   const [show , setShow ]= useState(false)
@@ -19,6 +21,7 @@ function Login() {
   const navigate = useNavigate()
   const [loading , setLoading ] = useState(false)
   const dispatch = useDispatch()
+  let role = ""
 
   const handlLogin = async () => {
     setLoading(true)
@@ -36,6 +39,31 @@ function Login() {
       }
   }
   
+        const googleLogin = async () => {
+        setLoading(true)
+        try {
+            const response = await signInWithPopup(auth , provider)
+            const user = response.user
+            
+            // Send user data to backend
+            const result = await axios.post(serverUrl + "/api/auth/google-signup", {
+                name: user.displayName,
+                email: user.email,
+                photoUrl: user.photoURL,
+                role: role
+            }, { withCredentials: true })
+            
+            dispatch(setUserData(result.data))
+            setLoading(false)
+            navigate("/")
+            toast.success("Login with Google Successfully!")
+        } catch (error) {
+            console.log(error)
+            setLoading(false)
+            toast.error(error?.response?.data?.message || "Google Login  Failed")
+        }
+    }
+
     return (
       <div className='bg-[#dddbdb] w-[100vw] h-[100vh] flex items-center justify-center gap-3'>
           <form onSubmit={(e)=>{e.preventDefault()}} className='w-[90%] md:w-200 h-150 bg-[white] shadow-xl rounded-2xl flex'>
@@ -75,7 +103,7 @@ function Login() {
                           <div className='w-[50%] text-[15px] text-[#6f6f6f] flex items-center justify-center'>Or Continue</div>
                           <div className='w-[25%] h-[0.5px] bg-[#c4c4c4] '></div>
                   </div>
-                  <div className='w-[80%] h-[40px] border-1 border-[black] rounded-[5px] flex items-center justify-center'>
+                  <div className='w-[80%] h-[40px] border-1 border-[black] rounded-[5px] flex items-center justify-center cursor-pointer' onClick={googleLogin}>
                       <img src={google} className='w-[25px]' alt="google" />
                       <span className='text-[18px] text-gray-500'>oogle</span>
                   </div>
