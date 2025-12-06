@@ -42,7 +42,7 @@ function Nav() {
                             }
 
                         </div>}
-                        {userData?.role=== "Educator" && <div className='px-[20px] py-[10px] border-2 lg:border-white border-white lg:text-white rounded-[10px] text-[18px] font-light  cursor-pointer '>Deshboard</div> }
+                        {userData?.role=== "Educator" && <div className='px-[20px] py-[10px] border-2 lg:border-white border-white lg:text-white rounded-[10px] text-[18px] font-light  cursor-pointer ' onClick={()=>{navigate("/deshboard")}}>Deshboard</div> }
                         {!userData ? <span className='px-[20px] py-[10px] border-2 border-white text-white rounded-[10px] text-[18px] font-light cursor-pointer bg-[#000000d5]' onClick={()=>{navigate("/login")}} >Login</span> :
                         <span className='px-[20px] py-[10px] border-2 border-white text-white rounded-[10px] text-[18px] font-light cursor-pointer bg-[#000000d5]' onClick={handleLogout} >Logout</span> }
                         {show && <div className='absolute top-[110%] right-[15%] flex items-center flex-col justify-center gap-2 text-[16px] rounded-md bg-gray-400 px-[15px] py-[10px] border-[2px] border-black hover:border-white hover:text-cursor-pointer hover:bg-white '>
@@ -66,7 +66,7 @@ function Nav() {
                             <div className='w-[200px] h-[50px] border-2 lg:border-white border-white lg:text-white rounded-[10px] text-[18px] bg-black text-white flex items-center justify-center font-light  cursor-pointer ' onClick={()=>{navigate("/profile")}}>My Profile</div>
                             <div className='w-[200px] h-[50px] border-2 lg:border-white border-white lg:text-white rounded-[10px] text-[18px] bg-black text-white flex items-center justify-center font-light  cursor-pointer '>My Courses</div>
 
-                        {userData?.role=== "Educator" && <div className='w-[200px] h-[50px] border-2 lg:border-white border-white flex items-center justify-center bg-black text-white lg:text-white rounded-[10px] text-[18px] font-light  cursor-pointer '>Deshboard</div> }
+                        {userData?.role=== "Educator" && <div className='w-[200px] h-[50px] border-2 lg:border-white border-white flex items-center justify-center bg-black text-white lg:text-white rounded-[10px] text-[18px] font-light  cursor-pointer ' onClick={()=>{navigate("/deshboard")}} >Deshboard</div> }
 
                         {!userData ? <span className='w-[200px] h-[50px] border-2 lg:border-white border-white lg:text-white rounded-[10px] text-[18px] bg-black text-white flex items-center justify-center font-light  cursor-pointer ' onClick={()=>{navigate("/login")}} >Login</span> :
                         <span className='w-[200px] h-[50px] border-2 lg:border-white border-white lg:text-white rounded-[10px] text-[18px] bg-black text-white flex items-center justify-center font-light  cursor-pointer ' onClick={handleLogout} >Logout</span> }
