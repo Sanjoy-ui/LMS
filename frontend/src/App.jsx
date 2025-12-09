@@ -15,11 +15,14 @@ import EditProfile from './pages/EditProfile'
 import Courses from './pages/Educator/Courses.jsx'
 import Deshboard from './pages/Educator/Deshboard.jsx'
 import CreateCourses from './pages/Educator/CreateCourses.jsx'
+import getCreatorCourse from './customHook/getCreatorCourse.js'
+import EditCourse from './pages/Educator/EditCourse.jsx'
 
 export const serverUrl = "http://localhost:8000"
 
 function App() {
   getCurrentUser()
+  getCreatorCourse()
   const { userData } = useSelector(state => state.user)
   return (
     <>
@@ -34,6 +37,7 @@ function App() {
           <Route path='/deshboard' element={userData?.role === "Educator" ? <Deshboard/> : <Navigate to={"/signup"} /> } />
           <Route path='/courses' element={userData?.role === "Educator" ? <Courses/> : <Navigate to={"/signup"} /> } />
           <Route path='/createcourse' element={userData?.role === "Educator" ? <CreateCourses/> : <Navigate to={"/signup"} /> } />
+          <Route path='/editcourse/:courseId' element={userData?.role === "Educator" ? <EditCourse/> : <Navigate to={"/signup"} /> } />
       </Routes>
     </>
   )

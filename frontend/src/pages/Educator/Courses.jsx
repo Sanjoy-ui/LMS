@@ -1,21 +1,45 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
 import emptyIMG from '../../assets/empty.jpg'
 import { FiEdit2 } from "react-icons/fi";
+import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
+import { serverUrl } from '../../App';
+import { setCreatorCourseData } from '../../redux/courseSlice';
 
 
 function Courses() {
   const navigate = useNavigate()
+  const {creatorCourseData} = useSelector(state=>state.course)
+  const dispatch = useDispatch()
+  const {userData} = useSelector(state=>state.user)
+  
+    useEffect(()=>{
+            const creatorCourse = async () => {
+                try {
+                    const result = await axios.get(serverUrl + "/api/course/getcreator" , {withCredentials : true})
+                    console.log(result.data)
+                    dispatch(setCreatorCourseData(result.data))
+                } catch (error) {
+                    console.log(error)
+
+                }
+            }
+
+            creatorCourse()
+        },[userData])
+ 
+
   return (
     <div className='flex min-h-screen bg-gray-100'>
-      <div className='w-[100%] min-h-screen p-4 sm:p-6 bg-gray-100'>
+      <div className='w-full min-h-screen p-4 sm:p-6 bg-gray-100'>
           <div className='flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-3'>
                 <div className='flex items-center justify-center gap-3'>
                       <FaArrowLeft className='w-[22px] h-[22px] cursor-pointer' onClick={()=>{navigate("/deshboard")}}/>
                       <h1 className='text-2xl font-semibold'>All Created Courses</h1>
                 </div>
-                <button className='bg-black text-white px-4 py-2 rounded hover:bg-gray-500' onClick={()=>{navigate("//createcourse")}}>Create Course</button>
+                <button className='bg-black text-white px-4 py-2 rounded hover:bg-gray-500' onClick={()=>{navigate("/createcourse")}}>Create Course</button>
           </div>
 
           {/* for large screen table  */}
@@ -30,28 +54,47 @@ function Courses() {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr className='border-b hover:bg-gray-50 transition duration-200'>
-                      <td className='py-3 px-4 flex items-center gap-4'>
-                        <img src={emptyIMG} className='w-25 h-14 object-cover rounded-md ' alt="" />
-                        <span>Title</span>
-                      </td>
-                      <td className='px-4 py-3'> Null</td>
-                      <td className='px-4 py-3'>
-                        <span className='px-3 py-1 rounded-full text-xs bg-red-100 text-red-600'>Draft</span>
-                      </td>
-                      <td className='px-4 py-3'>
-                        <FiEdit2  className='text-gray-600 hover:text-blue-600 cursor-pointer'/>
+                          {creatorCourseData?.map((course , index)=>(
 
+                    <tr key={index} className='border-b hover:bg-gray-50 transition duration-200'>
+                      <td className='py-3 px-4 flex items-center gap-4'>
+                        {course?.thumbnail ? <img src={course?.thumbnail} className='w-25 h-14 object-cover rounded-md ' alt="" /> : <img src={emptyIMG} className='w-25 h-14 object-cover rounded-md ' alt="" />}
+                        <span>{course?.title}</span>
+                      </td>
+                      {course?.price ? <td className='px-4 py-3'> {course?.price} </td> :
+                      <td className='px-4 py-3'> Null</td>}
+                      <td className='px-4 py-3'>
+                        <span className={`px-3 py-1 rounded-full text-xs ${course.isPublished ? "bg-green-100 text-green-600" : "bg-red-100  text-red-600" } `}>{course.isPublished?  "Published" :"Draft"}</span>
+                      </td>
+                      <td className='px-4 py-3'>
+                        <FiEdit2 onClick={()=>{navigate(`/editcourse/${course?._id}`)}} size={25}  className= ' text-gray-600 hover:text-blue-600 cursor-pointer'/>
+                                
                       </td>
                     </tr>
+                     ))}
                   </tbody>
                 </table>
+                <p className='text-center text-sm text-gray-400 mt-6'>LIst Of Your All Courses.</p>
           </div>
 
           {/* for small screen table  */}
 
-          <div>
+          <div className='md:hidden space-y-4'> 
+                 {creatorCourseData?.map((course , index)=>(
+                  <div key={index} className='bg-white rounded-lg shadow p-4 flex flex-col gap-3'>
+                    <div className='flex gap-4 items-center'>
+                        {course?.thumbnail ? <img src={course?.thumbnail} className='w-16 h-16 rounded-md object-cover' alt="" /> :<img src={emptyIMG} className='w-16 h-16 rounded-md object-cover' alt="" />}
+                        <div className='flex-1 '>
+                          <h2 className='font-medium text-sm'>{course?.title}</h2>
+                          <p className='text-gray-600 text-xs mt-1'>{course?.price || "Null"}</p>
+                        </div>
+                        <FiEdit2 onClick={()=>{navigate(`/editcourse/${course?._id}`)}} size={25}  className= ' text-gray-600 hover:text-blue-600 cursor-pointer'/>
 
+                    </div>
+                    <span className={`w-fit px-3 py-1 text-xs rounded-full ${course.isPublished ? "bg-green-100 text-green-600" : "bg-red-100 text-red-600"}`}>{course.isPublished ? "Published" : "Draft"}</span>
+                  </div>
+                 ))}
+                  <p className='text-center text-sm text-gray-400 mt-4'>List Of Your All Courses</p>
           </div>
           </div>
     </div>

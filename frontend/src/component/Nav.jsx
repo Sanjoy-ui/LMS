@@ -64,7 +64,7 @@ function Nav() {
                         </div>}
 
                             <div className='w-[200px] h-[50px] border-2 lg:border-white border-white lg:text-white rounded-[10px] text-[18px] bg-black text-white flex items-center justify-center font-light  cursor-pointer ' onClick={()=>{navigate("/profile")}}>My Profile</div>
-                            <div className='w-[200px] h-[50px] border-2 lg:border-white border-white lg:text-white rounded-[10px] text-[18px] bg-black text-white flex items-center justify-center font-light  cursor-pointer '>My Courses</div>
+                            <div className='w-[200px] h-[50px] border-2 lg:border-white border-white lg:text-white rounded-[10px] text-[18px] bg-black text-white flex items-center justify-center font-light  cursor-pointer ' onClick={()=>{navigate("/profile")}}>My Courses</div>
 
                         {userData?.role=== "Educator" && <div className='w-[200px] h-[50px] border-2 lg:border-white border-white flex items-center justify-center bg-black text-white lg:text-white rounded-[10px] text-[18px] font-light  cursor-pointer ' onClick={()=>{navigate("/deshboard")}} >Deshboard</div> }
 
