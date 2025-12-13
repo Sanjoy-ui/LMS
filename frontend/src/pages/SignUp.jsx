@@ -73,75 +73,82 @@ function SignUp() {
     }
 
   return (
-    <div className='bg-[#dddbdb] w-[100vw] h-[100vh] flex items-center justify-center gap-3'>
-        <form className='w-[90%] md:w-200 h-150 bg-[white] shadow-xl rounded-2xl flex' onSubmit={(e)=>{
+    <div className='bg-gray-100 min-h-screen w-full flex items-center justify-center p-4'>
+        <form className='w-full max-w-4xl bg-white shadow-2xl rounded-2xl flex overflow-hidden min-h-[600px]' onSubmit={(e)=>{
             e.preventDefault()
         }}>
             {/* left div */}
-            <div className='md:w-[50%] w-[100%] h-[100%] flex flex-col items-center justify-center gap-3'>
-                <div>
-                    <h1 className='font-semibold text-[black] text-2xl'>Let's Get Started</h1>
-                <h2 className='text-[#999797] text-[18px] '>Create Your Account</h2>
+            <div className='w-full md:w-1/2 flex flex-col items-center justify-center gap-6 p-8'>
+                <div className='text-center'>
+                    <h1 className='font-bold text-gray-900 text-3xl mb-2'>Let's Get Started</h1>
+                    <h2 className='text-gray-500 text-lg'>Create Your Account</h2>
                 </div>
-                <div className='flex flex-col gap-1 w-[80%] items-start justify-center px-3'>
-                        <label htmlFor="name" className='font-semibold'>Name</label>
-                        <input id='name' type="text" className='border-1 w-[100%] h-[35px] border-[#e7e6e6] text-[15px] rounded-2xl px-[20px] ' placeholder = "Your Name" onChange={(e)=>{
+                
+                <div className='flex flex-col gap-2 w-full max-w-xs'>
+                        <label htmlFor="name" className='font-semibold text-gray-700 text-sm'>Name</label>
+                        <input id='name' type="text" className='w-full h-10 border border-gray-300 rounded-lg px-4 focus:outline-none focus:ring-2 focus:ring-black/20 transition-all' placeholder = "Your Name" onChange={(e)=>{
                             setName(e.target.value) 
                         }} value={name} />
                 </div>
-                <div className='flex flex-col gap-1 w-[80%] items-start justify-center px-3'>
-                        <label htmlFor="email" className='font-semibold'>Email</label>
-                        <input id='email' type="email" className='border-1 w-[100%] h-[35px] border-[#e7e6e6] text-[15px] rounded-2xl px-[20px] ' placeholder = "Your Email" onChange={(e)=>{
+                <div className='flex flex-col gap-2 w-full max-w-xs'>
+                        <label htmlFor="email" className='font-semibold text-gray-700 text-sm'>Email</label>
+                        <input id='email' type="email" className='w-full h-10 border border-gray-300 rounded-lg px-4 focus:outline-none focus:ring-2 focus:ring-black/20 transition-all' placeholder = "Your Email" onChange={(e)=>{
                             setEmail(e.target.value)
                         }} value={email} />
                 </div>
-                <div className='flex flex-col gap-1 w-[80%] items-start justify-center px-3 relative'>
-                        <label htmlFor="password" className='font-semibold'>Password</label>
-                        <input id='password' type= {show ? "text" : 'password' } className='border-1 w-[100%] h-[35px] border-[#e7e6e6] text-[15px] rounded-2xl px-[20px] ' placeholder = "Password" onChange={(e)=>{
-                            setPassword(e.target.value)
-                        }} value={password} />
-                        { show ? <FaRegEye className=' absolute w-[20px] h-[20px] cursor-pointer right-[5%] buttom-[10%]' onClick={()=>{
-                            setShow(prev => !prev)
-                        }} /> : <IoMdEye className=' absolute w-[20px] h-[20px] cursor-pointer right-[5%] buttom-[10%]' onClick={()=>{
-                            setShow(prev => !prev)
-                        }} />}
-
-
+                <div className='flex flex-col gap-2 w-full max-w-xs relative'>
+                        <label htmlFor="password" className='font-semibold text-gray-700 text-sm'>Password</label>
+                        <div className='relative w-full'>
+                            <input id='password' type= {show ? "text" : 'password' } className='w-full h-10 border border-gray-300 rounded-lg px-4 pr-10 focus:outline-none focus:ring-2 focus:ring-black/20 transition-all' placeholder = "Password" onChange={(e)=>{
+                                setPassword(e.target.value)
+                            }} value={password} />
+                            <div className='absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 cursor-pointer'>
+                                { show ? <FaRegEye size={20} onClick={()=>setShow(prev => !prev)}/> : <IoMdEye size={20} onClick={()=>setShow(prev => !prev)} />}
+                            </div>
+                        </div>
                 </div>
-                <div className='flex md:w-[50%] w-[70%] items-center justify-between'>
-                        <span className={`px-[10px] py-[5px] border-[2px] border-[#e7e6e6] rounded-xl cursor-pointer hover:border-black ${role === "Student" ? "border-black" : "border-[#646464]"}` } onClick={()=>{
+                
+                <div className='flex w-full max-w-xs items-center justify-center gap-4'>
+                        <span className={`px-4 py-2 border-2 rounded-xl cursor-pointer transition-all font-medium text-sm ${role === "Student" ? "border-black bg-black text-white" : "border-gray-200 text-gray-500 hover:border-gray-400"}` } onClick={()=>{
                             setRole("Student")
                         }}>Student</span>
-                        <span className={`px-[10px] py-[5px] border-[2px] border-[#e7e6e6] rounded-xl cursor-pointer hover:border-black ${role === "Educator" ? "border-black" : "border-[#646464]"}`} onClick={()=>{
+                        <span className={`px-4 py-2 border-2 rounded-xl cursor-pointer transition-all font-medium text-sm ${role === "Educator" ? "border-black bg-black text-white" : "border-gray-200 text-gray-500 hover:border-gray-400"}`} onClick={()=>{
                             setRole("Educator")
                         }}>Educator</span>
-                        
                 </div>
-                <button className='w-[80%] h-[40px] bg-black text-white cursor-pointer flex items-center justify-center rounded-[5px] ' disabled= {loading} onClick={handleSignUp}>{loading ? <ClipLoader size={30} color = "white" /> : "Sign Up"}</button>
-                <div className='w-[80%] flex items-center gap-2'>
-                        <div className='w-[25%] h-[0.5px] bg-[#c4c4c4]  '></div>
-                        <div className='w-[50%] text-[15px] text-[#6f6f6f] flex items-center justify-center'>Or Continue</div>
-                        <div className='w-[25%] h-[0.5px] bg-[#c4c4c4] '></div>
+
+                <button className='w-full max-w-xs h-10 bg-black text-white font-medium rounded-lg hover:bg-gray-800 transition-colors flex items-center justify-center' disabled= {loading} onClick={handleSignUp}>{loading ? <ClipLoader size={20} color = "white" /> : "Sign Up"}</button>
+                
+                <div className='flex items-center gap-2 w-full max-w-xs'>
+                        <div className='h-[1px] bg-gray-300 flex-1'></div>
+                        <span className='text-xs text-gray-400'>OR</span>
+                        <div className='h-[1px] bg-gray-300 flex-1'></div>
                 </div>
+
                 <button 
                     type="button"
-                    className='w-[80%] h-[40px] border border-[black] rounded-[5px] flex items-center justify-center cursor-pointer hover:bg-gray-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed' 
+                    className='w-full max-w-xs h-10 border border-gray-300 rounded-lg flex items-center justify-center gap-3 hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed' 
                     onClick={googleSignUp}
                     disabled={loading}
                 >
-                    <img src={google} className='w-[25px] pointer-events-none' alt="google" />
-                    <span className='text-[18px] text-gray-500 pointer-events-none'>oogle</span>
+                    <img src={google} className='w-5 h-5 pointer-events-none' alt="Google" />
+                    <span className='text-sm font-medium text-gray-700 pointer-events-none'>Sign up with Google</span>
                 </button>
-                <div className='text-[#6f6f6f] '>
-                        Already have an account ? <span className='cursor-pointer underline underline-offset-1 text-[black] ' onClick={()=>{
-                            navigate("/login")
-                        }}>Login</span>
-                </div>
+
+                <p className='text-sm text-gray-600'>
+                        Already have an account? <span className='font-bold text-black cursor-pointer hover:underline' onClick={()=>{navigate("/login")}}>Login</span>
+                </p>
             </div>
             {/* right div */}
-            <div className='w-[50%] h-[100%] rounded-r-2xl bg-[black] md:flex items-center justify-center flex-col hidden'>
-                <img src={logo} alt="Logo" className='w-30 shadow-2xl' />
-                <span className='text-2xl text-white'>Virtual LMS</span>
+            <div className='hidden md:flex w-1/2 bg-black items-center justify-center p-12 relative overflow-hidden'>
+                <div className='absolute inset-0 opacity-20'>
+                    <div className='absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-gray-800 via-black to-black'></div>
+                </div>
+                <div className='relative z-10 text-center text-white space-y-6'>
+                    <img src={logo} className='w-32 h-32 rounded-2xl mx-auto mb-6 border-4 border-white/20 shadow-2xl' alt="Logo" />
+                    <h2 className='text-3xl font-bold'>Join our community</h2>
+                    <p className='text-gray-400 max-w-sm mx-auto'>Create an account to start learning, teaching, and growing with us.</p>
+                </div>
             </div>
         </form>
     </div>

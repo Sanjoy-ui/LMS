@@ -17,13 +17,24 @@ import Deshboard from './pages/Educator/Deshboard.jsx'
 import CreateCourses from './pages/Educator/CreateCourses.jsx'
 import getCreatorCourse from './customHook/getCreatorCourse.js'
 import EditCourse from './pages/Educator/EditCourse.jsx'
+import getPublishedCourse from './customHook/getPublishedCourse.js'
 
 export const serverUrl = "http://localhost:8000"
 
 function App() {
   getCurrentUser()
   getCreatorCourse()
-  const { userData } = useSelector(state => state.user)
+  getPublishedCourse()
+  const { userData, isAuthLoading } = useSelector(state => state.user)
+  
+  if (isAuthLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-xl">Loading...</div>
+      </div>
+    )
+  }
+  
   return (
     <>
       <ToastContainer />

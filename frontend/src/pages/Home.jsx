@@ -6,24 +6,39 @@ import ai1 from '../assets/SearchAi.png'
 import { MdPlayCircleOutline } from "react-icons/md";
 import Logo from '../component/Logo'
 import ExploreCourses from '../component/ExploreCourses'
+import CardPage from '../component/CardPage'
 
 
 function Home() {
   return (
-    <div className='w-[100%] overflow-hidden'>
-       <div className='w-[100%] lg:h-[140vh] h-[70vh] relative'>
+    <div className='w-full overflow-x-hidden'>
+       <div className='w-full relative min-h-[600px] lg:h-screen'>
         <Nav />
-        <img src={HeroIMG} className='object-cover md:object-fill w-[100%] lg:h-[100%] h-[50vh] ' alt="" />
-        <span className='lg:text-[70px] absolute md:text-[40px] lg:top-[10%] top-[15%] w-[100%] flex items-center justify-center text-white font-bold text-[20px]'>Grow Your Skills to Advance</span>
-        <span className='lg:text-[70px] absolute md:text-[40px] lg:top-[18%] top-[20%] w-[100%] flex items-center justify-center text-white font-bold text-[20px]'>Your career path</span>
-        <div className='absolute lg:top-[30%] top-[75%] md:top-[80%] w-[100%] flex items-center justify-center gap-3 flex-wrap '>
-              <button className='px-[20px] py-[10px] border-2 lg:border-white border-black lg:text-white text-black[10px] text-[18px] font-light flex gap-2 cursor-pointer'>View All courses <MdPlayCircleOutline className='w-[30px] h-[30px] lg:text-white text-black'/></button>
-              <button className='px-[20px] py-[10px] border-2 lg:bg-white bg-black lg:text-black text-white rounded-[10px] text-[18px] font-light flex gap-2 cursor-pointer items-center justify-center '>Search with ai <img src={ai} className='w-[30px] h-[30px] rounded-full hidden lg:block' alt="" /> <img src={ai1} className='w-[35px] h-[35px] rounded-full lg:hidden' alt="" /> </button>
-              
+        <div className='absolute inset-0 z-0'>
+            <img src={HeroIMG} className='w-full h-full object-cover' alt="Hero" />
+            <div className='absolute inset-0 bg-black/40'></div>
+        </div>
+        
+        <div className='relative z-10 flex flex-col items-center justify-center h-full text-center px-4 pt-20'>
+            <h1 className='text-4xl md:text-5xl lg:text-7xl font-bold text-white mb-4 leading-tight'>
+                Grow Your Skills to Advance <br className='hidden md:block' /> Your career path
+            </h1>
+            
+            <div className='flex flex-col sm:flex-row items-center gap-4 mt-8'>
+                  <button className='px-6 py-3 border-2 border-white text-white rounded-lg text-lg font-medium flex items-center gap-2 hover:bg-white hover:text-black transition-all duration-300'>
+                      View All courses <MdPlayCircleOutline className='w-6 h-6'/>
+                  </button>
+                  <button className='px-6 py-3 bg-white text-black border-2 border-white rounded-lg text-lg font-medium flex items-center gap-2 hover:bg-gray-100 transition-all duration-300'>
+                      Search with AI 
+                      <img src={ai} className='w-8 h-8 rounded-full hidden lg:block' alt="AI" /> 
+                      <img src={ai1} className='w-8 h-8 rounded-full lg:hidden' alt="AI" /> 
+                  </button>
+            </div>
         </div>
        </div>
        <Logo />
        <ExploreCourses />
+       <CardPage />
     </div>
   )
 }

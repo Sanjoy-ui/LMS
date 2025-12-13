@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import logo from  "../assets/logo.jpg"
+// import logo from  "../assets/logo.jpg"
 import { IoPersonCircleOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -9,6 +9,7 @@ import { setUserData } from '../redux/userSlice';
 import {toast } from "react-toastify"
 import { RxHamburgerMenu } from "react-icons/rx";
 import { ImCross } from "react-icons/im";
+import main_logo from '../assets/main_logo.webp'
 
 
 
@@ -30,46 +31,99 @@ function Nav() {
         }
     }
   return (
-    <div>
-        <div className='w-[100%] h-[70px] fixed top-0 px-[20px] py-[10px] flex items-center justify-between bg-[#000047] z-10 '>
-                <div className='lg:w-[20%] w-[40%] lg:pl-[50px]'>
-                    <img src={logo} alt="" className='w-[60px] rounded-[5px] border-2 border-white ' />
+    <div className='h-[70px]'>
+        <div className='w-full h-[70px] fixed top-0 px-6 py-2 flex items-center justify-between bg-[#000047] z-50 shadow-md'>
+                <div className='flex items-center gap-2 cursor-pointer' onClick={() => navigate('/')}>
+                    <img src={main_logo} alt="Logo" className='w-12 h-12 rounded-md border-2 border-white object-cover' />
+                    <span className='text-white font-bold text-xl hidden sm:block'>LMS</span>
                 </div>
-                <div className='w-[30%] lg:flex items-center justify-center gap-4 hidden'>
-                        {!userData && <IoPersonCircleOutline onClick={()=> setShow(prev => !prev)} className='w-[50px] h-[50px] fill-white cursor-pointer'/>}
-                        {userData?.photoUrl ? <img onClick={()=> setShow(prev => !prev)} className='w-[50px] h-[50px] rounded-full text-white flex items-center justify-center text-[28px] border-2 bg-black border-white cursor-pointer' src={userData.photoUrl} alt='User Photo' /> : <div onClick={()=> setShow(prev => !prev)}  className='w-[50px] h-[50px] rounded-full text-white flex items-center justify-center text-[28px] border-2 bg-black border-white cursor-pointer' >
-                            { userData?.name.slice(0,1).toUpperCase()
-                            }
-
-                        </div>}
-                        {userData?.role=== "Educator" && <div className='px-[20px] py-[10px] border-2 lg:border-white border-white lg:text-white rounded-[10px] text-[18px] font-light  cursor-pointer ' onClick={()=>{navigate("/deshboard")}}>Deshboard</div> }
-                        {!userData ? <span className='px-[20px] py-[10px] border-2 border-white text-white rounded-[10px] text-[18px] font-light cursor-pointer bg-[#000000d5]' onClick={()=>{navigate("/login")}} >Login</span> :
-                        <span className='px-[20px] py-[10px] border-2 border-white text-white rounded-[10px] text-[18px] font-light cursor-pointer bg-[#000000d5]' onClick={handleLogout} >Logout</span> }
-                        {show && <div className='absolute top-[110%] right-[15%] flex items-center flex-col justify-center gap-2 text-[16px] rounded-md bg-gray-400 px-[15px] py-[10px] border-[2px] border-black hover:border-white hover:text-cursor-pointer hover:bg-white '>
-                                <span className='bg-[black] text-white px-[30px] py-[10px] rounded-2xl hover:bg-gray-600 ' onClick={()=>{navigate("/profile")}} >My Profile</span>
-                                <span className='bg-[black] text-white px-[26px] py-[10px] rounded-2xl hover:bg-gray-600 '>My courses</span>
-                        </div>}
-
+                
+                <div className='hidden lg:flex items-center gap-6'>
+                        {userData?.role === "Educator" && (
+                            <button 
+                                className='px-5 py-2 border border-white text-white rounded-lg hover:bg-white hover:text-[#000047] transition-all duration-300 font-medium'
+                                onClick={()=>{navigate("/deshboard")}}
+                            >
+                                Dashboard
+                            </button>
+                        )}
                         
-
+                        {!userData ? (
+                            <button 
+                                className='px-6 py-2 bg-white text-[#000047] rounded-lg font-semibold hover:bg-gray-100 transition-all duration-300'
+                                onClick={()=>{navigate("/login")}} 
+                            >
+                                Login
+                            </button>
+                        ) : (
+                            <div className='relative'>
+                                <div className='flex items-center gap-3 cursor-pointer' onClick={()=> setShow(prev => !prev)}>
+                                    {userData?.photoUrl ? (
+                                        <img className='w-10 h-10 rounded-full border-2 border-white object-cover' src={userData.photoUrl} alt='User' />
+                                    ) : (
+                                        <div className='w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center text-lg font-bold border-2 border-white'>
+                                            {userData?.name?.slice(0,1).toUpperCase()}
+                                        </div>
+                                    )}
+                                </div>
+                                
+                                {show && (
+                                    <div className='absolute top-12 right-0 w-48 bg-white rounded-lg shadow-xl py-2 border border-gray-100 overflow-hidden animate-fade-in'>
+                                        <div className='px-4 py-2 border-b border-gray-100'>
+                                            <p className='text-sm font-semibold text-gray-800 truncate'>{userData.name}</p>
+                                            <p className='text-xs text-gray-500 truncate'>{userData.email}</p>
+                                        </div>
+                                        <button className='w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors' onClick={()=>{navigate("/profile"); setShow(false)}}>My Profile</button>
+                                        <button className='w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors' onClick={()=>{navigate("/profile"); setShow(false)}}>My Courses</button>
+                                        <button className='w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors' onClick={() => {handleLogout(); setShow(false)}}>Logout</button>
+                                    </div>
+                                )}
+                            </div>
+                        )}
                 </div>
-                <RxHamburgerMenu className='w-[35px] h-[35px] lg:hidden text-[white] fill-white cursor-pointer' onClick={()=>{ setShowHam(prev => !prev)}}/>
 
-                <div className={`fixed top-0 w-[100vw] h-[100vh] bg-[#000000d6] flex items-center justify-center flex-col gap-5 z-10 lg:hidden left-0 transition-all duration-500 ease-in-out ${showHam ? "translate-x-0 opacity-100" : "translate-x-full opacity-0 pointer-events-none"}`}>
-                            <ImCross onClick={()=>{ setShowHam(prev => !prev)}} className='w-[30px] h-[30px] text-white absolute top-5 right-[4%] cursor-pointer hover:scale-110 transition-transform'/>
-                                {!userData && <IoPersonCircleOutline  className='w-[50px] h-[50px] fill-white cursor-pointer'/>}
-                        {userData?.photoUrl ? <img src={userData.photoUrl} className='w-[50px] h-[50px] rounded-full text-white flex items-center justify-center text-[28px] border-2 bg-black border-white cursor-pointer' alt="User Photo" /> : <div   className='w-[50px] h-[50px] rounded-full text-white flex items-center justify-center text-[28px] border-2 bg-black border-white cursor-pointer' >
-                            {userData?.name.slice(0,1).toUpperCase()}
+                <RxHamburgerMenu className='w-8 h-8 lg:hidden text-white cursor-pointer hover:scale-105 transition-transform' onClick={()=>{ setShowHam(true)}}/>
 
-                        </div>}
+                {/* Mobile Menu Overlay */}
+                <div className={`fixed inset-0 bg-black/50 z-40 lg:hidden transition-opacity duration-300 ${showHam ? "opacity-100" : "opacity-0 pointer-events-none"}`} onClick={() => setShowHam(false)} />
 
-                            <div className='w-[200px] h-[50px] border-2 lg:border-white border-white lg:text-white rounded-[10px] text-[18px] bg-black text-white flex items-center justify-center font-light  cursor-pointer ' onClick={()=>{navigate("/profile")}}>My Profile</div>
-                            <div className='w-[200px] h-[50px] border-2 lg:border-white border-white lg:text-white rounded-[10px] text-[18px] bg-black text-white flex items-center justify-center font-light  cursor-pointer ' onClick={()=>{navigate("/profile")}}>My Courses</div>
+                {/* Mobile Menu Sidebar */}
+                <div className={`fixed top-0 right-0 w-[75%] max-w-[300px] h-full bg-[#000047] flex flex-col gap-6 p-6 z-50 lg:hidden transition-transform duration-300 ease-out shadow-2xl ${showHam ? "translate-x-0" : "translate-x-full"}`}>
+                    <div className='flex justify-end'>
+                        <ImCross onClick={()=>{ setShowHam(false)}} className='w-6 h-6 text-white cursor-pointer hover:rotate-90 transition-transform duration-300'/>
+                    </div>
+                    
+                    <div className='flex flex-col items-center gap-4 mt-4'>
+                        {userData ? (
+                            <div className='flex flex-col items-center gap-2'>
+                                {userData?.photoUrl ? (
+                                    <img src={userData.photoUrl} className='w-20 h-20 rounded-full border-4 border-white object-cover' alt="User" />
+                                ) : (
+                                    <div className='w-20 h-20 rounded-full bg-blue-600 text-white flex items-center justify-center text-3xl font-bold border-4 border-white'>
+                                        {userData?.name?.slice(0,1).toUpperCase()}
+                                    </div>
+                                )}
+                                <p className='text-white font-semibold text-lg'>{userData.name}</p>
+                            </div>
+                        ) : (
+                            <IoPersonCircleOutline className='w-20 h-20 text-white/80' />
+                        )}
+                    </div>
 
-                        {userData?.role=== "Educator" && <div className='w-[200px] h-[50px] border-2 lg:border-white border-white flex items-center justify-center bg-black text-white lg:text-white rounded-[10px] text-[18px] font-light  cursor-pointer ' onClick={()=>{navigate("/deshboard")}} >Deshboard</div> }
-
-                        {!userData ? <span className='w-[200px] h-[50px] border-2 lg:border-white border-white lg:text-white rounded-[10px] text-[18px] bg-black text-white flex items-center justify-center font-light  cursor-pointer ' onClick={()=>{navigate("/login")}} >Login</span> :
-                        <span className='w-[200px] h-[50px] border-2 lg:border-white border-white lg:text-white rounded-[10px] text-[18px] bg-black text-white flex items-center justify-center font-light  cursor-pointer ' onClick={handleLogout} >Logout</span> }
+                    <div className='flex flex-col gap-3 w-full mt-4'>
+                        <button className='w-full py-3 px-4 bg-white/10 text-white rounded-lg hover:bg-white/20 transition-colors text-left font-medium' onClick={()=>{navigate("/profile"); setShowHam(false)}}>My Profile</button>
+                        <button className='w-full py-3 px-4 bg-white/10 text-white rounded-lg hover:bg-white/20 transition-colors text-left font-medium' onClick={()=>{navigate("/profile"); setShowHam(false)}}>My Courses</button>
+                        
+                        {userData?.role === "Educator" && (
+                            <button className='w-full py-3 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-left font-medium' onClick={()=>{navigate("/deshboard"); setShowHam(false)}}>Dashboard</button>
+                        )}
+                        
+                        {!userData ? (
+                            <button className='w-full py-3 px-4 bg-white text-[#000047] rounded-lg hover:bg-gray-100 transition-colors font-bold text-center mt-4' onClick={()=>{navigate("/login"); setShowHam(false)}}>Login</button>
+                        ) : (
+                            <button className='w-full py-3 px-4 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors font-bold text-center mt-4' onClick={() => {handleLogout(); setShowHam(false)}}>Logout</button>
+                        )}
+                    </div>
                 </div>
         </div>
     </div>

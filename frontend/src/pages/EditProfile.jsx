@@ -44,49 +44,73 @@ function EditProfile() {
   }
   return (
     <div className="min-h-screen bg-gray-100 px-4 py-10 flex items-center justify-center">
-      <div className="bg-white rounded-2xl shadow-lg p-8 max-w-xl w-full relative ">
-        <FaArrowLeft
-          className=" absolute top-[5%] left-[5%] w-[22px] h-[22px] cursor-pointer"
-          onClick={() => navigate("/profile")}
-        />
-        <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">Edit Profile</h2>
-        <form action="" className="space-y-5" onSubmit={(e)=>e.preventDefault()}>
-          <div className="flex flex-col items-center text-center">
-            {userData?.photoUrl ? (
-              <img
-                src={userData?.photoUrl}
-                className="w-24 h-24 rounded-full object-cover border-4 border-[black] "
-                alt=""
-              />
-            ) : (
-              <div className="w-24 h-24 rounded-full text-white flex items-center justify-center text-[30px] border-2 bg-black border-white">
-                {userData?.name.slice(0, 1).toUpperCase()}
-              </div>
-            )}
-          </div>
-          <div>
-            <label className="text-sm font-medium text-gray-700 " htmlFor="image">Select Avatar :</label>
-            <input type="file" id="image" className="cursor-pointer w-full px-4 py-2 border rounded-md text-sm" name="photoUrl" placeholder="PhotoUrl" accept="image/*"  onChange={(e)=>{
-                setPhotoUrl(e.target.files[0])
+      <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-2xl w-full relative overflow-hidden">
+        <div className='absolute top-0 left-0 w-full h-32 bg-black'></div>
+        <button onClick={() => navigate("/profile")} className='absolute top-6 left-6 text-white hover:text-gray-300 transition-colors z-10 flex items-center gap-2'>
+            <FaArrowLeft size={20} />
+            <span className='font-medium'>Back</span>
+        </button>
+
+        <div className="relative mt-12 mb-8 text-center">
+            <h2 className="text-3xl font-bold text-gray-900">Edit Profile</h2>
+            <p className="text-gray-500 mt-2">Update your personal information</p>
+        </div>
+
+        <form action="" className="space-y-6" onSubmit={(e)=>e.preventDefault()}>
+          <div className="flex flex-col items-center text-center mb-8">
+            <div className="relative group cursor-pointer">
+                {photoUrl ? (
+                    <img
+                        src={URL.createObjectURL(photoUrl)}
+                        className="w-32 h-32 rounded-full object-cover border-4 border-white shadow-lg bg-white"
+                        alt="Preview"
+                    />
+                ) : userData?.photoUrl ? (
+                  <img
+                    src={userData?.photoUrl}
+                    className="w-32 h-32 rounded-full object-cover border-4 border-white shadow-lg bg-white"
+                    alt="Profile"
+                  />
+                ) : (
+                  <div className="w-32 h-32 rounded-full text-white flex items-center justify-center text-4xl border-4 border-white bg-black shadow-lg">
+                    {userData?.name?.slice(0, 1).toUpperCase()}
+                  </div>
+                )}
+                <label htmlFor="image" className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity text-white font-medium text-sm">
+                    Change Photo
+                </label>
+            </div>
+            <input type="file" id="image" className="hidden" name="photoUrl" accept="image/*" onChange={(e)=>{
+                if(e.target.files[0]) setPhotoUrl(e.target.files[0])
             }} />
           </div>
-          <div>
-            <label className="text-sm font-medium text-gray-700 " htmlFor="name">Username :</label>
-            <input type="text" id="name" className="cursor-pointer w-full px-4 py-2 border rounded-md text-sm"  value={name} placeholder={userData?.name} required onChange={(e)=>{
-                setName(e.target.value)
-            }}  />
+
+          <div className="grid grid-cols-1 gap-6">
+            <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2" htmlFor="name">Username</label>
+                <input type="text" id="name" className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-black/20 focus:border-black outline-none transition-all" value={name} placeholder={userData?.name} required onChange={(e)=>{
+                    setName(e.target.value)
+                }}  />
+            </div>
+            
+            <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Email Address</label>
+                <input readOnly type="text" className="w-full px-4 py-3 border border-gray-200 bg-gray-50 rounded-xl text-gray-500 cursor-not-allowed" value={userData?.email} />
+            </div>
+
+            <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2" htmlFor="description">Bio</label>
+                <textarea rows={4} id="description" className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-black/20 focus:border-black outline-none transition-all resize-none" value={description} placeholder="Tell us about yourself..." name="description" onChange={(e)=>{
+                    setDescription(e.target.value)
+                }} />
+            </div>
           </div>
-          <div>
-            <label className="text-sm font-medium text-gray-700 ">Email :</label>
-            <input readOnly type="text" id="email" className="cursor-pointer w-full px-4 py-2 border rounded-md text-sm" placeholder={userData?.email}  />
+
+          <div className="pt-4">
+            <button className="w-full bg-black hover:bg-gray-800 text-white py-3.5 rounded-xl font-medium transition-all shadow-lg hover:shadow-xl active:scale-[0.99] flex items-center justify-center" onClick={handleProfileEdit} disabled= {loading} >
+                {loading ? <ClipLoader color="white" size={24}/> : "Save Changes"}
+            </button>
           </div>
-          <div>
-            <label className="text-sm font-medium text-gray-700 " htmlFor="description">Bio :</label>
-            <textarea type="text" rows={3} id="description" className="cursor-pointer mt-1 w-full px-4 py-2 border-gray-300 border rounded-md resize-none focus:ring-2 focus:ring-[black]"  value={description}  placeholder={userData?.description} name="description"  onChange={(e)=>{
-                setDescription(e.target.value)
-            }} />
-          </div>
-          <button className="w-full bg-[black] active:bg-[#454545] text-white py-2 rounded-md font-medium transition cursor-pointer" onClick={handleProfileEdit} disabled= {loading} >{loading? <ClipLoader color="white" size={30}/> : "Save Changes"}</button>
         </form>
       </div>
     </div>
