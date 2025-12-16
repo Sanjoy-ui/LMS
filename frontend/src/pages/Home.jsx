@@ -7,9 +7,11 @@ import { MdPlayCircleOutline } from "react-icons/md";
 import Logo from '../component/Logo'
 import ExploreCourses from '../component/ExploreCourses'
 import CardPage from '../component/CardPage'
+import { useNavigate } from 'react-router-dom'
 
 
 function Home() {
+  const navigate = useNavigate()
   return (
     <div className='w-full overflow-x-hidden'>
        <div className='w-full relative min-h-[600px] lg:h-screen'>
@@ -25,7 +27,7 @@ function Home() {
             </h1>
             
             <div className='flex flex-col sm:flex-row items-center gap-4 mt-8'>
-                  <button className='px-6 py-3 border-2 border-white text-white rounded-lg text-lg font-medium flex items-center gap-2 hover:bg-white hover:text-black transition-all duration-300'>
+                  <button className='px-6 py-3 border-2 border-white text-white rounded-lg text-lg font-medium flex items-center gap-2 hover:bg-white hover:text-black transition-all duration-300' onClick={()=>{navigate("/allcourses")}}>
                       View All courses <MdPlayCircleOutline className='w-6 h-6'/>
                   </button>
                   <button className='px-6 py-3 bg-white text-black border-2 border-white rounded-lg text-lg font-medium flex items-center gap-2 hover:bg-gray-100 transition-all duration-300'>

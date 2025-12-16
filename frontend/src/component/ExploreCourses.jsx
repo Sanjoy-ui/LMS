@@ -1,97 +1,61 @@
 import React from 'react'
-import { MdPlayCircleOutline } from "react-icons/md";
-import { MdOutlineImportantDevices } from "react-icons/md";
-import { SiUikit } from "react-icons/si";
-import { MdOutlineAppSettingsAlt } from "react-icons/md";
-import { SiWeb3Dotjs } from "react-icons/si";
-import { SiHiveBlockchain } from "react-icons/si";
-import { MdSatellite } from "react-icons/md";
+import { MdPlayCircleOutline, MdOutlineImportantDevices, MdOutlineAppSettingsAlt, MdSatellite } from "react-icons/md";
+import { SiUikit, SiWeb3Dotjs, SiHiveBlockchain, SiDwavesystems } from "react-icons/si";
 import { GiCyberEye } from "react-icons/gi";
-import { SiDwavesystems } from "react-icons/si";
-
-
-
-
-
-
-
-
+import { useNavigate } from 'react-router-dom';
 
 function ExploreCourses() {
+    const navigate = useNavigate()
+    
+    const categories = [
+        { icon: <MdOutlineImportantDevices size={40} className="text-gray-700" />, name: "Web Development", color: "bg-pink-100" },
+        { icon: <SiUikit size={40} className="text-gray-700" />, name: "UI / UX Designing", color: "bg-green-100" },
+        { icon: <MdOutlineAppSettingsAlt size={40} className="text-gray-700" />, name: "App Development", color: "bg-red-100" },
+        { icon: <SiHiveBlockchain size={40} className="text-gray-700" />, name: "BlockChain", color: "bg-blue-100" },
+        { icon: <SiWeb3Dotjs size={40} className="text-gray-700" />, name: "Web 3 Devops", color: "bg-purple-100" },
+        { icon: <MdSatellite size={40} className="text-gray-700" />, name: "DSA", color: "bg-cyan-100" },
+        { icon: <GiCyberEye size={40} className="text-gray-700" />, name: "Cyber Security", color: "bg-indigo-100" },
+        { icon: <SiDwavesystems size={40} className="text-gray-700" />, name: "System Design", color: "bg-orange-100" },
+    ]
+
   return (
-    <div className='w-[100vw] min-h-[50vh] lg:h-[50vh] flex flex-col lg:flex-row items-center justify-center gap-4 px-[30px]'>
-        {/* left div  */}
-        <div className='w-[100%] lg:w-[350px] lg:h-[100%] h-[400px] flex flex-col items-start justify-center gap-1 md:px-[40px] px-[20px] '>
-            <span className='text-[35px] font-semibold'>Explore </span>
-            <span className='text-[35px] font-semibold'>Our Courses</span>
-            <p className='text-[17px] '>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur nobis nihil porro necessitatibus alias quas ratione quibusdam quia ea corrupti, asperiores, at natus laborum vel deleniti eius dignissimos cum praesentium.</p>
-            <button className='px-[20px] py-[10px] border-2 bg-[black] border-white text-white rounded-[10px] text-[18px] font-light flex gap-2 mt-[40px]  '>Explore Courses<MdPlayCircleOutline className='w-[30px] h-[30px] lg:text-white text-black cursor-pointer'/></button>
-        </div>
-        {/* right div */}
-        <div className='w-[720px] max-w-[90%] lg:h-[300px] md:min-h-[300px] flex gap-5 items-center justify-center lg:gap-[60px] flex-wrap mb-[60px] lg:mb-[0px] '>
-                <div className='w-[100px] h-[130px] font-light text-[13px] flex flex-col gap-3 text-center'>
-                    <div className='w-[100px] h-[90px] bg-[#fbd9fb] rounded-lg flex items-center justify-center '>
-                            <MdOutlineImportantDevices  className='w-[60px] h-[60px] text-[#6d6c6c]' color='white'/>
-
-                    </div>
-                    Web Development
+    <div className='w-full py-20 px-4 md:px-8 lg:px-16 bg-white'>
+        <div className='max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-12 lg:gap-20'>
+            {/* left div  */}
+            <div className='w-full lg:w-1/3 flex flex-col items-start gap-6'>
+                <div className='space-y-2'>
+                    <h2 className='text-4xl md:text-5xl font-bold text-gray-900 leading-tight'>
+                        Explore <br />
+                        <span className='text-gray-500'>Our Courses</span>
+                    </h2>
                 </div>
+                <p className='text-lg text-gray-600 leading-relaxed'>
+                    Discover a wide range of courses designed to help you master new skills and advance your career. From coding to design, we have something for everyone.
+                </p>
+                <button 
+                    className='group px-8 py-4 bg-black text-white rounded-xl text-lg font-medium flex items-center gap-3 hover:bg-gray-800 transition-all shadow-lg hover:shadow-xl active:scale-95' 
+                    onClick={()=>{navigate("/allcourses")}}
+                >
+                    Explore All Courses
+                    <MdPlayCircleOutline className='w-6 h-6 group-hover:scale-110 transition-transform'/>
+                </button>
+            </div>
 
-                <div className='w-[100px] h-[130px] font-light text-[13px] flex flex-col gap-3 text-center'>
-                    <div className='w-[100px] h-[90px] bg-[#afd39f] rounded-lg flex items-center justify-center '>
-                            <SiUikit  className='w-[60px] h-[60px] text-[#6d6c6c]' color='white'/>
-
-                    </div>
-                    UI / UX Designing
+            {/* right div */}
+            <div className='w-full lg:w-2/3'>
+                <div className='grid grid-cols-2 md:grid-cols-4 gap-6'>
+                    {categories.map((cat, index) => (
+                        <div key={index} className='flex flex-col items-center gap-3 group cursor-pointer'>
+                            <div className={`w-24 h-24 ${cat.color} rounded-2xl flex items-center justify-center shadow-sm group-hover:shadow-md group-hover:scale-105 transition-all duration-300`}>
+                                {cat.icon}
+                            </div>
+                            <span className='text-sm font-medium text-gray-700 text-center group-hover:text-black transition-colors'>
+                                {cat.name}
+                            </span>
+                        </div>
+                    ))}
                 </div>
-
-                <div className='w-[100px] h-[130px] font-light text-[13px] flex flex-col gap-3 text-center'>
-                    <div className='w-[100px] h-[90px] bg-[#ef9797] rounded-lg flex items-center justify-center '>
-                            <MdOutlineAppSettingsAlt  className='w-[60px] h-[60px] text-[#6d6c6c]' color='white'/>
-
-                    </div>
-                    App Development
-                </div>
-
-                <div className='w-[100px] h-[130px] font-light text-[13px] flex flex-col gap-3 text-center'>
-                    <div className='w-[100px] h-[90px] bg-[#5c99da] rounded-lg flex items-center justify-center '>
-                            <SiHiveBlockchain  className='w-[60px] h-[60px] text-[#6d6c6c]' color='white'/>
-
-                    </div>
-                    BlockChain Development
-                </div>
-
-                <div className='w-[100px] h-[130px] font-light text-[13px] flex flex-col gap-3 text-center'>
-                    <div className='w-[100px] h-[90px] bg-[#c5a7c5] rounded-lg flex items-center justify-center '>
-                            <SiWeb3Dotjs  className='w-[60px] h-[60px] text-[#6d6c6c]' color='white'/>
-
-                    </div>
-                    Web 3 Devops
-                </div>
-
-                <div className='w-[100px] h-[130px] font-light text-[13px] flex flex-col gap-3 text-center'>
-                    <div className='w-[100px] h-[90px] bg-[#d1f6f6] rounded-lg flex items-center justify-center '>
-                            <MdSatellite  className='w-[60px] h-[60px] text-[#6d6c6c]' color='white'/>
-
-                    </div>
-                    DSA
-                </div>
-
-                <div className='w-[100px] h-[130px] font-light text-[13px] flex flex-col gap-3 text-center'>
-                    <div className='w-[100px] h-[90px] bg-[#6377e8] rounded-lg flex items-center justify-center '>
-                            <GiCyberEye  className='w-[60px] h-[60px] text-[#6d6c6c]' color='white'/>
-
-                    </div>
-                    Cyber Security
-                </div>
-
-                <div className='w-[100px] h-[130px] font-light text-[13px] flex flex-col gap-3 text-center'>
-                    <div className='w-[100px] h-[90px] bg-[#f06868] rounded-lg flex items-center justify-center '>
-                            <SiDwavesystems  className='w-[60px] h-[60px] text-[#6d6c6c]' color='white'/>
-
-                    </div>
-                   System Design
-                </div>
+            </div>
         </div>
     </div>
   )

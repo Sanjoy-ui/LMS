@@ -1,5 +1,6 @@
 import React from 'react'
-import logo from '../assets/logo.jpg'
+import main_logo from '../assets/main_logo.webp'
+
 import google from '../assets/google.jpg'
 import { FaRegEye } from "react-icons/fa";
 import { IoMdEye } from "react-icons/io";
@@ -145,7 +146,7 @@ function SignUp() {
                     <div className='absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-gray-800 via-black to-black'></div>
                 </div>
                 <div className='relative z-10 text-center text-white space-y-6'>
-                    <img src={logo} className='w-32 h-32 rounded-2xl mx-auto mb-6 border-4 border-white/20 shadow-2xl' alt="Logo" />
+                    <img src={main_logo} className='w-32 h-32 rounded-2xl mx-auto mb-6 border-4 border-white/20 shadow-2xl' alt="Logo" />
                     <h2 className='text-3xl font-bold'>Join our community</h2>
                     <p className='text-gray-400 max-w-sm mx-auto'>Create an account to start learning, teaching, and growing with us.</p>
                 </div>

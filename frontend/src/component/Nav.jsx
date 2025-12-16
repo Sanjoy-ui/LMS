@@ -35,7 +35,7 @@ function Nav() {
         <div className='w-full h-[70px] fixed top-0 px-6 py-2 flex items-center justify-between bg-[#000047] z-50 shadow-md'>
                 <div className='flex items-center gap-2 cursor-pointer' onClick={() => navigate('/')}>
                     <img src={main_logo} alt="Logo" className='w-12 h-12 rounded-md border-2 border-white object-cover' />
-                    <span className='text-white font-bold text-xl hidden sm:block'>LMS</span>
+                    <span className='text-white font-bold text-xl hidden sm:block'>Learn X</span>
                 </div>
                 
                 <div className='hidden lg:flex items-center gap-6'>
